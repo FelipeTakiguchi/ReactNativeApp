@@ -3297,7 +3297,7 @@
   "resolved" "https://registry.npmjs.org/blueimp-md5/-/blueimp-md5-2.19.0.tgz"
   "version" "2.19.0"
 
-"body-parser@^1.20.1":
+"body-parser@^1.20.1", "body-parser@^1.20.2":
   "integrity" "sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA=="
   "resolved" "https://registry.npmjs.org/body-parser/-/body-parser-1.20.2.tgz"
   "version" "1.20.2"

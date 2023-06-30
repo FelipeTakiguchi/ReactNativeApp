@@ -4,6 +4,7 @@ import styles from '../styles/styles';
 // import app from '../FirebaseConfig';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native'
 
 export default function Listagem() {
     // const auth = getAuth(app)
@@ -18,6 +19,7 @@ export default function Listagem() {
     //         })
     // }
     const [transactions, setTransactions] = useState([]);
+    const navigation = useNavigation()
 
     useEffect(() => {
         const getTransactions = async () => {
@@ -35,19 +37,30 @@ export default function Listagem() {
 
         getTransactions();
     }, [])
+
     return (
         <View style={styles.container}>
-            <Text>Listagem</Text>
-            <Text>{transactions.map((transaction, index) => {
-                return (
-                    <View>
-                        <Text>{ transaction.reference }</Text>
-                        <Text>{ transaction.amount }</Text>
-                        <Text>{ transaction.date }</Text>
-                    </View>
-                )
-            })}</Text>
-        </View>
+            <TouchableOpacity style={styles.rightComponent} onPress={
+                () => navigation.navigate('newTransaction')
+            }>
+                <View style={styles.buttonIcon}>
+                    <Text style={styles.buttonIconText}>+</Text>
+                </View>
+            </TouchableOpacity>
+            <Text style={styles.titleText}>Listagem</Text>
+
+            <View style={styles.containerList}>
+                <Text>{transactions.map((transaction, index) => {
+                    return (
+                        <View style={styles.card}>
+                            <Text>{transaction.reference}</Text>
+                            <Text>{transaction.amount}</Text>
+                            <Text>{transaction.date}</Text>
+                        </View>
+                    )
+                })}</Text>
+            </View>
+        </View >
     );
 }
 

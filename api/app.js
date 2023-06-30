@@ -1,11 +1,24 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const { Transaction } = require('./schemas/Transaction');
+const bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const app = express();
-app.use(cors())
+app.use(cors());
+app.use(jsonParser);
+app.use(express.json());
+app.use(urlencodedParser);
 
+app.get('/', async(req, res) => {
+    await Transaction.create({
+        data: new Date().toString(),
+        referencia: 'ref#1',
+        valor: 125.20,
+    })
 
-app.get('/', (req, res) => {
     res.send("Olá")
 })
 
@@ -59,9 +72,21 @@ app.get('/transactions', (req, res) => {
     res.json(arrTransaction);
 })
 
-
+app.post('/addTransacao', urlencodedParser, async(req, res) => {
+    await Transaction.create({
+        data: req.body.data,
+        referencia: req.body.referencia,
+        valor: req.body.valor,
+    })
+})
 
 const port = 3000;
-app.listen(port, () => {
-    console.log("TA RODANDO")
-})
+const serverInit = async() => {
+    await mongoose.connect('mongodb+srv://felipentakiguchi:123456789_@cluster0.mr8dtfn.mongodb.net/?retryWrites=true&w=majority')
+
+    app.listen(port, async() => {
+        console.log("TA RODANDO");
+    })    
+}
+
+serverInit();
